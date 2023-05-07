@@ -38,7 +38,7 @@ def decode_mask(encoded_pixels):
     return mask
 
 
-def read_or_create_target_image(imgname):
+def read_or_create_target_image(imgname) -> np.ndarray:
     """
         Reads the 4-channel tensor target for the image, or returns a tensor
         of zeroes if it doesn't exist.
@@ -47,6 +47,17 @@ def read_or_create_target_image(imgname):
         return np.load(imgname)
     else:
         return np.zeros((4, steel_dim[1], steel_dim[0]))
+    
+def add_no_defect_channel(label_tensor):
+    """
+        Takes a 4-channel image (defect_type_1, dt2, dt3, dt4)
+        ands adds a channel to make it(dt1, dt2, dt3, no_defect),
+        set to 1 if none of the other defects are present.
+    """
+    has_label = (np.sum(label_tensor, axis = 0) > 0) * 1.0
+    label_tensor =np.insert(label_tensor, 4, has_label, axis = 0)
+    
+    return label_tensor
 
 
 steel_defect_dir = path.join(root, "steel_defect")
@@ -102,4 +113,7 @@ else:
             label_fpath = path.join(processed_label_dir, f"{img_id}.npy")
             defect_tensor = read_or_create_target_image(label_fpath)
             defect_tensor[channel] = defect_mask
+
+            defect_tensor = add_no_defect_channel(defect_tensor)
+
             np.save(label_fpath, defect_tensor)
