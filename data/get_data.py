@@ -76,10 +76,12 @@ else:
                             "r") as zipped:
         zipped.extractall(steel_defect_dir)
 
+steel_processed_dir = path.join(steel_defect_dir, "processed")
+if not path.exists(steel_processed_dir):
+    
     # Process images and targets into numpy files for quick and easy loading
     print("Processing steel defect dataset...")
 
-    steel_processed_dir = path.join(steel_defect_dir, "processed")
     os.mkdir(steel_processed_dir)
     processed_img_dir = path.join(steel_processed_dir, "images")
     os.mkdir(processed_img_dir)

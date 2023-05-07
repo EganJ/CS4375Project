@@ -2,25 +2,46 @@ import os
 import torch
 import fcnn
 import datetime
+import argparse
 from data.loaders import SteelLoader
 
-device = "cuda:0"
-
-res_dir = "simple_steel_training_results"
-print("Saving to ", os.path.abspath(res_dir))
-if not os.path.exists(res_dir):
-    os.mkdir(res_dir)
+print = lambda *args, **kwargs: print(*args, **kwargs, flush = True)
 
 def get_date_string():
-    return datetime.datetime.now().strftime("%m.%d.%y-%H:%M")
+        return datetime.datetime.now().strftime("%m.%d.%y-%H.%M")
 
-for lr in [1e-6, 1e-8, 1e-10, 1e-12]:
-    print("Starting lr", lr)
-
+def setup_trial_dir(lr):
     lr_dir = os.path.join(res_dir, f"lr-{str(lr)}-"+get_date_string())
     os.mkdir(lr_dir)
+    return lr_dir
+if __name__ == "__main__":
     
-    network = fcnn.SimpleFCN(dim_out= 4)
+    args = argparse.ArgumentParser(description = "Train SimpleFCN on steel defect datset")
+    args.add_argument("lr")
+    args.add_argument("device", default = "cuda:0")
+    args.add_argument("res_parent_dir", default = "simple_steel_training_results")
+    args.add_argument("n_epochs", default = 20)
+    
+    args = args.parse_args()
+
+    lr = args["lr"]
+    device = args["device"]
+    res_dir = args["res_parent_dir"]
+    n_epochs = args["n_epochs"]
+    
+
+
+    print("Saving to ", os.path.abspath(res_dir))
+    if not os.path.exists(res_dir):
+        os.mkdir(res_dir)
+
+    
+
+    print("Starting lr", lr)
+
+    lr_dir = setup_trial_dir(lr)
+    
+    network = fcnn.SimpleFCN(dim_out= 5)
     network = network.to(device)
 
     optim = torch.optim.SGD(network.parameters(), lr, momentum=0.2)
@@ -30,8 +51,8 @@ for lr in [1e-6, 1e-8, 1e-10, 1e-12]:
     steel_data = SteelLoader(train=True)
 
     with open(os.path.join(lr_dir, "train_losses.txt"), "w") as loss_file:
-        for epoch in range(20):
-            print(f"Starting epoch {epoch}:", get_date_string())
+        for epoch in range(n_epochs):
+            print(f"Starting epoch {epoch + 1}:", get_date_string())
             loss_sum = 0.0
             n_items = 0
             steel_data.shuffle()
@@ -55,10 +76,11 @@ for lr in [1e-6, 1e-8, 1e-10, 1e-12]:
                 loss.backward()
                 optim.step()
 
-            model_save_path = os.path.join(lr_dir, f"epoch{epoch}state.torch")
+            model_save_path = os.path.join(lr_dir, f"epoch{epoch+1}state.torch")
             torch.save(network.state_dict(), model_save_path)
 
             avg_loss = loss_sum/n_items
             loss_file.write(f"{avg_loss}\n")
+            loss_file.flush()
 
-print("Done:", get_date_string())
+    print("Done:", get_date_string())
