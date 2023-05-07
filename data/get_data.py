@@ -46,7 +46,7 @@ def read_or_create_target_image(imgname):
     if path.exists(imgname):
         return np.load(imgname)
     else:
-        return np.zeros((steel_dim[1], steel_dim[0], 4))
+        return np.zeros((4, steel_dim[1], steel_dim[0]))
 
 
 steel_defect_dir = path.join(root, "steel_defect")
@@ -92,10 +92,14 @@ else:
 
             image_fpath = path.join(processed_img_dir, f"{img_id}.npy")
             if not path.exists(image_fpath):
-                img_tensor = np.asarray(Image.open(img_origin_file))
+                # We want the tensor in the form (channel, x, y) that convolutions
+                # are expecting, but we get (x, y, channel). 
+                # For some reason the transpose here takes the overall runtime of this
+                # part of the script from ~20 minutes to ~80 minutes. 
+                img_tensor = np.asarray(Image.open(img_origin_file)).transpose(2, 0, 1)
                 np.save(image_fpath, img_tensor)
 
             label_fpath = path.join(processed_label_dir, f"{img_id}.npy")
             defect_tensor = read_or_create_target_image(label_fpath)
-            defect_tensor[:, :, channel] = defect_mask
+            defect_tensor[channel] = defect_mask
             np.save(label_fpath, defect_tensor)
