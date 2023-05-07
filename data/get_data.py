@@ -46,7 +46,7 @@ def read_or_create_target_image(imgname) -> np.ndarray:
     if path.exists(imgname):
         return np.load(imgname)
     else:
-        return np.zeros((4, steel_dim[1], steel_dim[0]))
+        return np.zeros((5, steel_dim[1], steel_dim[0]))
     
 def add_no_defect_channel(label_tensor):
     """
@@ -54,6 +54,7 @@ def add_no_defect_channel(label_tensor):
         ands adds a channel to make it(dt1, dt2, dt3, no_defect),
         set to 1 if none of the other defects are present.
     """
+    label_tensor = label_tensor[:4]
     has_label = (np.sum(label_tensor, axis = 0) > 0) * 1.0
     label_tensor =np.insert(label_tensor, 4, has_label, axis = 0)
     

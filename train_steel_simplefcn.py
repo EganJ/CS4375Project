@@ -5,7 +5,9 @@ import datetime
 import argparse
 from data.loaders import SteelLoader
 
-print = lambda *args, **kwargs: print(*args, **kwargs, flush = True)
+def print_flush(*args, **kwargs):
+     kwargs["flush"] = True
+     print(*args, **kwargs)
 
 def get_date_string():
         return datetime.datetime.now().strftime("%m.%d.%y-%H.%M")
@@ -17,27 +19,27 @@ def setup_trial_dir(lr):
 if __name__ == "__main__":
     
     args = argparse.ArgumentParser(description = "Train SimpleFCN on steel defect datset")
-    args.add_argument("lr")
-    args.add_argument("device", default = "cuda:0")
-    args.add_argument("res_parent_dir", default = "simple_steel_training_results")
-    args.add_argument("n_epochs", default = 20)
+    args.add_argument("--lr", action="store")
+    args.add_argument("--device", action="store")
+    args.add_argument("--res_parent_dir", default = "simple_steel_training_results", action = "store")
+    args.add_argument("--n_epochs", default = 20, action="store")
     
     args = args.parse_args()
 
-    lr = float(args["lr"])
-    device = args["device"]
-    res_dir = args["res_parent_dir"]
-    n_epochs = int(args["n_epochs"])
+    lr = float(args.lr)
+    device = torch.device(args.device)
+    res_dir = args.res_parent_dir
+    n_epochs = int(args.n_epochs)
     
 
 
-    print("Saving to ", os.path.abspath(res_dir))
+    print_flush("Saving to ", os.path.abspath(res_dir))
     if not os.path.exists(res_dir):
         os.mkdir(res_dir)
 
     
 
-    print("Starting lr", lr)
+    print_flush("Starting lr", lr)
 
     lr_dir = setup_trial_dir(lr)
     
@@ -52,7 +54,7 @@ if __name__ == "__main__":
 
     with open(os.path.join(lr_dir, "train_losses.txt"), "w") as loss_file:
         for epoch in range(n_epochs):
-            print(f"Starting epoch {epoch + 1}:", get_date_string())
+            print_flush(f"Starting epoch {epoch + 1}:", get_date_string())
             loss_sum = 0.0
             n_items = 0
             steel_data.shuffle()
@@ -83,4 +85,4 @@ if __name__ == "__main__":
             loss_file.write(f"{avg_loss}\n")
             loss_file.flush()
 
-    print("Done:", get_date_string())
+    print_flush("Done:", get_date_string())
