@@ -55,7 +55,7 @@ def add_no_defect_channel(label_tensor):
         set to 1 if none of the other defects are present.
     """
     label_tensor = label_tensor[:4]
-    has_label = (np.sum(label_tensor, axis = 0) > 0) * 1.0
+    has_label = (np.sum(label_tensor, axis = 0) == 0) * 1.0
     label_tensor =np.insert(label_tensor, 4, has_label, axis = 0)
     
     return label_tensor
