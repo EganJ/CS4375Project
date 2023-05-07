@@ -6,7 +6,7 @@
 import torch
 from torch import nn
 
-class BasceFCN(nn.Module):
+class BaseFCN(nn.Module):
     def __init__(self, downsample_layers: "list[nn.Module]",
                  prediction_layer: nn.Module,
                  upsample_layers: "list[nn.Module]",
@@ -41,7 +41,7 @@ class BasceFCN(nn.Module):
         return self.final_layer(x)
 
 
-class SimpleFCN(BasceFCN):
+class SimpleFCN(BaseFCN):
     """
         A fully convolutional adaptation of the Simple CNN described in the
         assignment document, under "Candidate CNN models" header.
