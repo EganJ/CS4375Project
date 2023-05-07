@@ -51,22 +51,22 @@ def read_or_create_target_image(imgname):
 
 steel_defect_dir = path.join(root, "steel_defect")
 if path.exists(steel_defect_dir):
-    #     print("Steel defect directory already found, skipping...")
-    # else:
-    #     os.mkdir(steel_defect_dir)
-    #     print("Downloading steel defect dataset from kaggle...")
-    #     kaggle.api.competition_download_files("severstal-steel-defect-detection",
-    #                                           steel_defect_dir,
-    #                                           quiet=False)
+    print("Steel defect directory already found, skipping...")
+else:
+    os.mkdir(steel_defect_dir)
+    print("Downloading steel defect dataset from kaggle...")
+    kaggle.api.competition_download_files("severstal-steel-defect-detection",
+                                            steel_defect_dir,
+                                            quiet=False)
 
-    #     print("Unzipping steel defect dataset...")
-    #     with zipfile.ZipFile(path.join(steel_defect_dir,
-    #                                    "severstal-steel-defect-detection.zip"),
-    #                          "r") as zipped:
-    #         zipped.extractall(steel_defect_dir)
+    print("Unzipping steel defect dataset...")
+    with zipfile.ZipFile(path.join(steel_defect_dir,
+                                    "severstal-steel-defect-detection.zip"),
+                            "r") as zipped:
+        zipped.extractall(steel_defect_dir)
 
-    #     # Process images and targets into numpy files for quick and easy loading
-    #     print("Processing steel defect dataset...")
+    # Process images and targets into numpy files for quick and easy loading
+    print("Processing steel defect dataset...")
 
     steel_processed_dir = path.join(steel_defect_dir, "processed")
     os.mkdir(steel_processed_dir)
