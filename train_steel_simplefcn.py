@@ -24,10 +24,10 @@ if __name__ == "__main__":
     
     args = args.parse_args()
 
-    lr = args["lr"]
+    lr = float(args["lr"])
     device = args["device"]
     res_dir = args["res_parent_dir"]
-    n_epochs = args["n_epochs"]
+    n_epochs = int(args["n_epochs"])
     
 
 
