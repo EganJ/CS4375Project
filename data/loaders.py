@@ -28,14 +28,14 @@ with open(path.join(aitex_root, "train_catalog.txt"), "r") as train_catalog:
 
 with open(path.join(aitex_root, "test_catalog.txt"), "r") as test_catalog:
     aitex_test_catalog = test_catalog.readlines()
-    aitex_test_catalog = [n.strip() for n in steel_test_catalog]
+    aitex_test_catalog = [n.strip() for n in aitex_test_catalog]
 
 class AitexDataset(Dataset):
     def __init__(self, train = True):
         if train:
-            self.catalog = aitex_train_catalog
+            self.catalog = aitex_train_catalog.copy()
         else:
-            self.catalog = aitex_test_catalog
+            self.catalog = aitex_test_catalog.copy()
 
     def __len__(self):
         return len(self.catalog)
@@ -47,6 +47,8 @@ class AitexDataset(Dataset):
         y = torch.Tensor(np.load(path.join(aitex_label_dir, name)))
 
         return x, y
+    
+
 class SteelDataset(Dataset):
     """ Do NOT use with shuffle = True"""
     def __init__(self, train = True, chunksize = 160, threads = 8):
@@ -117,4 +119,4 @@ class SteelLoader(DataLoader):
             Shuffles the dataset in a way that still allows for performant
             disk access
         """
-        self.dataset.catalog = random.shuffle(self.dataset.catalog)
+        random.shuffle(self.dataset.catalog)

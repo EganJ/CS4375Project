@@ -50,8 +50,8 @@ class SimpleFCN(BaseFCN):
 
         # Downsample to smaller dimensions. We need to keep track of the outputs
         # so they can be fused with upsampling later.
-        pool1_dim = 4
-        pool2_dim = 4
+        pool1_dim = 15
+        pool2_dim = 15
 
         pool1_stride = 2
         pool2_stride = 2
