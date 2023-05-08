@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import csv
-from PIL import Image
+from PIL import Image, ImageOps
 from tqdm import tqdm
 from os import path
 
@@ -26,7 +26,7 @@ def save_image(img_id:str, tensor: np.ndarray):
     np.save(path.join(aitex_images, f"{img_id}.npy"), tensor)
 
 def load_image(fpath):
-    img = Image.open(fpath)
+    img = ImageOps.grayscale(Image.open(fpath))
     img = np.asarray(img)
     img = img.reshape((1, *img.shape))
     return img
@@ -41,7 +41,7 @@ def process_defect(defect_img_name:str):
 
     img = load_image(path.join(raw_img, defect_img_name))
     save_image(img_id, img)
-
+    
 def process_no_defect(img_name:str):
     img_id = img_name.split(".")[0]
 
@@ -50,6 +50,9 @@ def process_no_defect(img_name:str):
 
     mask = np.zeros_like(img)
     save_mask(img_id, mask)
+
+    if img.shape != (1, 256, 4096):
+        print(img_id)
 
 print("Processing defect images...")
 for defect_img in tqdm(os.listdir(raw_img)):

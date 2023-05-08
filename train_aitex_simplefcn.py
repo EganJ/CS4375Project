@@ -1,9 +1,10 @@
 import os
 import torch
+from torch.utils.data import DataLoader
 import fcnn
 import datetime
 import argparse
-from data.loaders import SteelLoader
+from data.loaders import AitexDataset
 from loss import DiceLoss
 
 def print_flush(*args, **kwargs):
@@ -19,7 +20,7 @@ def setup_trial_dir(lr):
     return lr_dir
 if __name__ == "__main__":
     
-    args = argparse.ArgumentParser(description = "Train SimpleFCN on steel defect datset")
+    args = argparse.ArgumentParser(description = "Train SimpleFCN on aitex datset")
     args.add_argument("--lr", action="store")
     args.add_argument("--device", action="store")
     args.add_argument("--res_parent_dir", default = "simple_steel_training_results", action = "store")
@@ -42,7 +43,7 @@ if __name__ == "__main__":
 
     lr_dir = setup_trial_dir(lr)
     
-    network = fcnn.SimpleFCN(dim_out= 5)
+    network = fcnn.SimpleFCN(dim_in=1, dim_out = 1)
     network = network.to(device)
 
     optim = torch.optim.Adam(network.parameters(), lr)
@@ -50,7 +51,7 @@ if __name__ == "__main__":
 
     loss_fn = DiceLoss()
 
-    steel_data = SteelLoader(train=True)
+    steel_data = DataLoader(AitexDataset(train=True), batch_size=4, shuffle=True)
 
     with open(os.path.join(lr_dir, "train_losses.txt"), "a") as loss_file:
         for epoch in range(n_epochs):

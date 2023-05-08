@@ -17,6 +17,36 @@ with open(path.join(steel_root, "test_catalog.txt"), "r") as test_catalog:
     steel_test_catalog = test_catalog.readlines()
     steel_test_catalog = [n.strip() for n in steel_test_catalog]
 
+
+aitex_root = path.join(path.dirname(__file__), "aitex")
+aitex_img_dir = path.join(aitex_root, "processed", "images")
+aitex_label_dir = path.join(aitex_root, "processed", "labels")
+
+with open(path.join(aitex_root, "train_catalog.txt"), "r") as train_catalog:
+    aitex_train_catalog = train_catalog.readlines()
+    aitex_train_catalog = [n.strip() for n in aitex_train_catalog]
+
+with open(path.join(aitex_root, "test_catalog.txt"), "r") as test_catalog:
+    aitex_test_catalog = test_catalog.readlines()
+    aitex_test_catalog = [n.strip() for n in steel_test_catalog]
+
+class AitexDataset(Dataset):
+    def __init__(self, train = True):
+        if train:
+            self.catalog = aitex_train_catalog
+        else:
+            self.catalog = aitex_test_catalog
+
+    def __len__(self):
+        return len(self.catalog)
+    
+    def __getitem__(self, index):
+        name = self.catalog[index]
+
+        x = torch.Tensor(np.load(path.join(aitex_img_dir, name)))
+        y = torch.Tensor(np.load(path.join(aitex_label_dir, name)))
+
+        return x, y
 class SteelDataset(Dataset):
     """ Do NOT use with shuffle = True"""
     def __init__(self, train = True, chunksize = 160, threads = 8):
@@ -87,4 +117,4 @@ class SteelLoader(DataLoader):
             Shuffles the dataset in a way that still allows for performant
             disk access
         """
-        random.shuffle(self.dataset.catalog)
+        self.dataset.catalog = random.shuffle(self.dataset.catalog)
