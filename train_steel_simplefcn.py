@@ -24,7 +24,7 @@ if __name__ == "__main__":
     args.add_argument("--device", action="store")
     args.add_argument("--res_parent_dir", default = "simple_steel_training_results", action = "store")
     args.add_argument("--n_epochs", default = 80, action="store")
-    args.add_argument("--lr_decay", default = 0.98, action = "store")
+    args.add_argument("--lr_decay", default = 0.94, action = "store")
     
     args = args.parse_args()
 
