@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     loss_fn = DiceLoss()
 
-    steel_data = DataLoader(AitexDataset(train=True), batch_size=4, shuffle=True)
+    aitex_data = DataLoader(AitexDataset(train=True), batch_size=4, shuffle=True)
 
     with open(os.path.join(lr_dir, "train_losses.txt"), "a") as loss_file:
         for epoch in range(n_epochs):
@@ -60,9 +60,8 @@ if __name__ == "__main__":
 
             loss_sum = 0.0
             n_items = 0
-            steel_data.shuffle()
 
-            for imgs, labels in steel_data:
+            for imgs, labels in aitex_data:
                 imgs = imgs.to(device)
                 labels = labels.to(device)
 
