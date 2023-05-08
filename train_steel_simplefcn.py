@@ -70,7 +70,8 @@ if __name__ == "__main__":
                 pred_labels = network(imgs)
 
                 loss = loss_fn(pred_labels, labels)
-                loss_sum += loss.item()
+                
+                loss_sum += loss.item() * imgs.shape[0]
 
                 optim.zero_grad()
                 loss.backward()
