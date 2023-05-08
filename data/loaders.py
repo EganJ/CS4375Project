@@ -117,4 +117,4 @@ class SteelLoader(DataLoader):
             Shuffles the dataset in a way that still allows for performant
             disk access
         """
-        random.shuffle(self.dataset.catalog)
+        self.dataset.catalog = random.shuffle(self.dataset.catalog)
