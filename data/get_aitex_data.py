@@ -5,7 +5,7 @@ from PIL import Image
 from tqdm import tqdm
 from os import path
 
-aitex_root = path.join(path.pardir(__file__), "aitex")
+aitex_root = path.join(path.dirname(__file__), "aitex")
 
 raw_img = path.join(aitex_root, "Defect_images")
 raw_no_defect = path.join(aitex_root, "NODefect_images")
@@ -27,7 +27,8 @@ def save_image(img_id:str, tensor: np.ndarray):
 
 def load_image(fpath):
     img = Image.open(fpath)
-    img = np.as_array(img)
+    img = np.asarray(img)
+    img = img.reshape((1, *img.shape))
     return img
 
 def process_defect(defect_img_name:str):
@@ -36,10 +37,24 @@ def process_defect(defect_img_name:str):
     mask_name = f"{img_id}_mask.png"
 
     mask = load_image(path.join(raw_masks, mask_name))
-    print(mask.shape)
     save_mask(img_id, mask)
 
-    img = load_image(path.join(raw_img, defect_image_name))
-    save_img(img_id, img)
+    img = load_image(path.join(raw_img, defect_img_name))
+    save_image(img_id, img)
 
-process_defect("0001_002_00.png")
+def process_no_defect(img_name:str):
+    img_id = img_name.split(".")[0]
+
+    img = load_image(path.join(raw_no_defect, img_name))
+    save_image(img_id, img)
+
+    mask = np.zeros_like(img)
+    save_mask(img_id, mask)
+
+print("Processing defect images...")
+for defect_img in tqdm(os.listdir(raw_img)):
+    process_defect(defect_img)
+
+print("Processing no-defect images...")
+for no_defect_img in tqdm(os.listdir(raw_no_defect)):
+    process_no_defect(no_defect_img)

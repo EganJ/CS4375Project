@@ -1,4 +1,5 @@
 data/steel_defect/
+data/aitex/processed/
 nohup.out
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
