@@ -89,4 +89,6 @@ class SimpleFCN(BaseFCN):
             )
         ])
 
-        super().__init__(downsample_layers, prediction_layer, upsample_layers)
+        final_layer = nn.Sigmoid() if dim_out == 1 else nn.Softmax2d()
+
+        super().__init__(downsample_layers, prediction_layer, upsample_layers, final_layer)
