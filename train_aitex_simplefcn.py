@@ -23,7 +23,7 @@ if __name__ == "__main__":
     args = argparse.ArgumentParser(description = "Train SimpleFCN on aitex datset")
     args.add_argument("--lr", action="store")
     args.add_argument("--device", action="store")
-    args.add_argument("--res_parent_dir", default = "simple_steel_training_results", action = "store")
+    args.add_argument("--res_parent_dir", default = "simple_aitex_training_results", action = "store")
     args.add_argument("--n_epochs", default = 80, action="store")
     args.add_argument("--lr_decay", default = 0.94, action = "store")
     
