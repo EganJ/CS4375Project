@@ -24,5 +24,4 @@ class DiceLoss(torch.nn.Module):
         dice_score = 2 * intersection / domain
 
         loss = 1 - dice_score.mean()
-        print(loss) 
         return loss
