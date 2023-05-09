@@ -20,6 +20,7 @@ os.mkdir(aitex_images)
 os.mkdir(aitex_labels)
 
 def save_mask(img_id:str, tensor: np.ndarray):
+    tensor = np.stack([tensor[0], 1 - tensor[0]])
     np.save(path.join(aitex_labels, f"{img_id}.npy"), tensor)
 
 def save_image(img_id:str, tensor: np.ndarray):
@@ -28,7 +29,7 @@ def save_image(img_id:str, tensor: np.ndarray):
 def load_image(fpath):
     img = ImageOps.grayscale(Image.open(fpath))
     img = np.asarray(img)
-    img = img.reshape((1, *img.shape))
+    img = img.reshape((1, *img.shape)) / 255
     return img
 
 def process_defect(defect_img_name:str):

@@ -51,7 +51,7 @@ class AitexDataset(Dataset):
 
 class SteelDataset(Dataset):
     """ Do NOT use with shuffle = True"""
-    def __init__(self, train = True, chunksize = 160, threads = 8):
+    def __init__(self, train = True, chunksize = 40, threads = 4):
         self.chunksize = chunksize
         self.threads = threads
 
