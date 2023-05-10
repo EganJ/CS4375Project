@@ -11,12 +11,15 @@ def confusion_matrix(actual, pred, n_classes) -> pd.DataFrame:
                       fill_value=0) 
     return mat
 
-def apply_names(conf_matrix: pd.DataFrame) -> None:
+def apply_names(conf_matrix: pd.DataFrame, mnist = False) -> None:
     n_classes = len(conf_matrix)
     if n_classes == 2:
         names = ["Detection", "No Detection"]
     else:
-        names = [f"Class {i}" for i in range(1, n_classes)] + ["No Detection"]
+        if mnist:
+            names = [str(i) for i in range(n_classes - 1)] + ["No Digit"]
+        else:
+            names = [f"Class {i}" for i in range(1, n_classes)] + ["No Detection"]
     conf_matrix.columns = names
     conf_matrix.index = names
     return conf_matrix
