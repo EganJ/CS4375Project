@@ -14,9 +14,9 @@ def confusion_matrix(actual, pred, n_classes) -> pd.DataFrame:
 def apply_names(conf_matrix: pd.DataFrame) -> None:
     n_classes = len(conf_matrix)
     if n_classes == 2:
-        names = ["Defect", "No Defect"]
+        names = ["Detection", "No Detection"]
     else:
-        names = [f"Defect {i}" for i in range(1, n_classes)] + ["No Defect"]
+        names = [f"Class {i}" for i in range(1, n_classes)] + ["No Detection"]
     conf_matrix.columns = names
     conf_matrix.index = names
     return conf_matrix
