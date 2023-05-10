@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 import fcnn, unet
 import datetime
 import argparse
-from data.loaders import SteelLoader, AitexDataset
+from data.loaders import SteelLoader, AitexDataset, SegmentationMnistDataset
 from loss import DiceLoss
 
 def print_flush(*args, **kwargs):
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     args.add_argument("--lr", action = "store")
     args.add_argument("--device", action = "store")
     args.add_argument("--res_parent_dir", default = "training_results", action = "store")
-    args.add_argument("--n_epochs", default = 50, action = "store")
+    args.add_argument("--n_epochs", default = 10, action = "store")
     args.add_argument("--lr_decay", default = 0.94, action = "store")
     
     parsed = args.parse_args()
@@ -58,6 +58,10 @@ if __name__ == "__main__":
          loader = SteelLoader(True, batch_size=10) 
          dim_in = 3
          dim_out = 5
+    elif data == "mnist":
+         loader = DataLoader(SegmentationMnistDataset(True), batch_size= 10)
+         dim_in = 1
+         dim_out = 11
     else:
          raise ValueError("Unkown Dataset: " + data)
 
@@ -65,8 +69,8 @@ if __name__ == "__main__":
     model = parsed.model
     if model == "simplefcn":
         network = fcnn.SimpleFCN(dim_in = dim_in, dim_out = dim_out)
-    elif model == "unet_v1":
-         network = unet.simple_unet_v1(dim_in, dim_out)
+    elif model == "unet_v2":
+         network = unet.simple_unet_v2(dim_in, dim_out)
     elif model == "unet_paper":
          network = unet.simple_unet_paper_version(dim_in, dim_out)
     else:

@@ -1,0 +1,112 @@
+nohup: ignoring input
+Saving to  /home/011/e/ec/ecj200000/CS4375Project/training_results
+Running experiment with args:
+Namespace(data='steel', device='cuda:0', lr='1e-3', lr_decay=0.94, model='unet_v1', n_epochs=50, res_parent_dir='training_results')
+Starting epoch 1: 05.08.23-22.55
+Starting epoch 2: 05.08.23-22.59
+Starting epoch 3: 05.08.23-23.03
+Starting epoch 4: 05.08.23-23.07
+Starting epoch 5: 05.08.23-23.11
+Starting epoch 6: 05.08.23-23.15
+Starting epoch 7: 05.08.23-23.19
+Starting epoch 8: 05.08.23-23.23
+Starting epoch 9: 05.08.23-23.27
+Starting epoch 10: 05.08.23-23.31
+Starting epoch 11: 05.08.23-23.34
+Starting epoch 12: 05.08.23-23.38
+Starting epoch 13: 05.08.23-23.42
+Starting epoch 14: 05.08.23-23.46
+Starting epoch 15: 05.08.23-23.50
+Starting epoch 16: 05.08.23-23.54
+Starting epoch 17: 05.08.23-23.58
+Starting epoch 18: 05.09.23-00.02
+Starting epoch 19: 05.09.23-00.06
+Starting epoch 20: 05.09.23-00.10
+Starting epoch 21: 05.09.23-00.14
+Starting epoch 22: 05.09.23-00.18
+Starting epoch 23: 05.09.23-00.22
+Starting epoch 24: 05.09.23-00.26
+Starting epoch 25: 05.09.23-00.30
+Starting epoch 26: 05.09.23-00.34
+Starting epoch 27: 05.09.23-00.38
+Starting epoch 28: 05.09.23-00.42
+Starting epoch 29: 05.09.23-00.46
+Starting epoch 30: 05.09.23-00.50
+Starting epoch 31: 05.09.23-00.54
+Starting epoch 32: 05.09.23-00.58
+Starting epoch 33: 05.09.23-01.02
+Starting epoch 34: 05.09.23-01.06
+Starting epoch 35: 05.09.23-01.10
+Starting epoch 36: 05.09.23-01.14
+Starting epoch 37: 05.09.23-01.18
+Starting epoch 38: 05.09.23-01.22
+Starting epoch 39: 05.09.23-01.26
+Starting epoch 40: 05.09.23-01.30
+Starting epoch 41: 05.09.23-01.34
+Starting epoch 42: 05.09.23-01.38
+Starting epoch 43: 05.09.23-01.42
+Starting epoch 44: 05.09.23-01.46
+Starting epoch 45: 05.09.23-01.50
+Starting epoch 46: 05.09.23-01.54
+Starting epoch 47: 05.09.23-01.58
+Starting epoch 48: 05.09.23-02.02
+Starting epoch 49: 05.09.23-02.06
+Starting epoch 50: 05.09.23-02.10
+Done: 05.09.23-02.14
+/home/011/e/ec/ecj200000/.local/lib/python3.6/site-packages/torch/optim/lr_scheduler.py:154: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+Saving to  /home/011/e/ec/ecj200000/CS4375Project/training_results
+Running experiment with args:
+Namespace(data='steel', device='cuda:0', lr='1e-3', lr_decay=0.94, model='unet_paper', n_epochs=50, res_parent_dir='training_results')
+Starting epoch 1: 05.09.23-02.15
+Starting epoch 2: 05.09.23-02.27
+Starting epoch 3: 05.09.23-02.40
+Starting epoch 4: 05.09.23-02.53
+Starting epoch 5: 05.09.23-03.05
+Starting epoch 6: 05.09.23-03.18
+Starting epoch 7: 05.09.23-03.31
+Starting epoch 8: 05.09.23-03.43
+Starting epoch 9: 05.09.23-03.56
+Starting epoch 10: 05.09.23-04.08
+Starting epoch 11: 05.09.23-04.21
+Starting epoch 12: 05.09.23-04.34
+Starting epoch 13: 05.09.23-04.46
+Starting epoch 14: 05.09.23-04.59
+Starting epoch 15: 05.09.23-05.11
+Starting epoch 16: 05.09.23-05.24
+Starting epoch 17: 05.09.23-05.37
+Starting epoch 18: 05.09.23-05.49
+Starting epoch 19: 05.09.23-06.02
+Starting epoch 20: 05.09.23-06.14
+Starting epoch 21: 05.09.23-06.27
+Starting epoch 22: 05.09.23-06.40
+Starting epoch 23: 05.09.23-06.52
+Starting epoch 24: 05.09.23-07.05
+Starting epoch 25: 05.09.23-07.17
+Starting epoch 26: 05.09.23-07.30
+Starting epoch 27: 05.09.23-07.43
+Starting epoch 28: 05.09.23-07.55
+Starting epoch 29: 05.09.23-08.08
+Starting epoch 30: 05.09.23-08.20
+Starting epoch 31: 05.09.23-08.33
+Starting epoch 32: 05.09.23-08.46
+Starting epoch 33: 05.09.23-08.59
+Starting epoch 34: 05.09.23-09.11
+Starting epoch 35: 05.09.23-09.24
+Starting epoch 36: 05.09.23-09.36
+Starting epoch 37: 05.09.23-09.49
+Starting epoch 38: 05.09.23-10.02
+Starting epoch 39: 05.09.23-10.14
+./train.sh: line 2: 28567 Terminated              python3 -m training_script --data steel --model unet_paper --lr 1e-3 --device cuda:0
+Saving to  /home/011/e/ec/ecj200000/CS4375Project/training_results
+Running experiment with args:
+Namespace(data='aitex', device='cuda:0', lr='1e-3', lr_decay=0.94, model='unet_v1', n_epochs=50, res_parent_dir='training_results')
+Starting epoch 1: 05.09.23-10.18
+Starting epoch 2: 05.09.23-10.18
+Starting epoch 3: 05.09.23-10.19
+Starting epoch 4: 05.09.23-10.19
+Starting epoch 5: 05.09.23-10.19
+Starting epoch 6: 05.09.23-10.20
+Starting epoch 7: 05.09.23-10.20
+Starting epoch 8: 05.09.23-10.20
+Starting epoch 9: 05.09.23-10.21

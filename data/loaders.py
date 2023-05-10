@@ -3,6 +3,7 @@ import random
 import numpy as np
 import threading
 from torch.utils.data import Dataset, DataLoader
+import os
 from os import path
 
 steel_root = path.join(path.dirname(__file__), "steel_defect")
@@ -30,6 +31,11 @@ with open(path.join(aitex_root, "test_catalog.txt"), "r") as test_catalog:
     aitex_test_catalog = test_catalog.readlines()
     aitex_test_catalog = [n.strip() for n in aitex_test_catalog]
 
+
+mnist_root = path.join(path.dirname(__file__), "mnist")
+mnist_test = path.join(mnist_root, "test")
+mnist_train = path.join(mnist_root, "train")
+
 class AitexDataset(Dataset):
     def __init__(self, train = True):
         if train:
@@ -48,6 +54,35 @@ class AitexDataset(Dataset):
 
         return x, y
     
+
+class SegmentationMnistDataset(Dataset):
+    def __init__(self, train = True):
+        if train:
+            base_dir = mnist_train
+        else:
+            base_dir = mnist_test
+
+        xdir = path.join(base_dir, "input")
+        ydir = path.join(base_dir, "label")
+
+        x_blocks = []
+        y_blocks = []
+
+        for blockname in os.listdir(xdir):
+            x_blocks.append(np.load(path.join(xdir, blockname)))
+            y_blocks.append(np.load(path.join(ydir, blockname)))
+        
+        self.x = np.concatenate(x_blocks)
+        self.y = np.concatenate(y_blocks)
+
+        self.n = len(self.x)
+
+    def __len__(self):
+        return self.n
+    
+    def __getitem__(self, index):
+        return torch.Tensor(self.x[index]), torch.Tensor(self.y[index])
+
 
 class SteelDataset(Dataset):
     """ Do NOT use with shuffle = True"""

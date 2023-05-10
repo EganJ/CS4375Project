@@ -1,0 +1,1 @@
+Namespace(data='mnist', device='cuda:0', lr='1e-3', lr_decay=0.94, model='unet_v2', n_epochs=50, res_parent_dir='training_results')

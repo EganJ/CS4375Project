@@ -2,9 +2,7 @@ import pandas as pd
 import numpy as np
 
 def confusion_matrix(actual, pred, n_classes) -> pd.DataFrame:
-
-   
-    mat = pd.crosstab(actual, pred, normalize = False)
+    mat = pd.crosstab(pred, actual, normalize = False)
     
     # sometimes a column might be missing
     expected_index = [i for i in range(n_classes)]

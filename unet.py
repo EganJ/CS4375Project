@@ -33,16 +33,33 @@ class BaseUNet(nn.Module):
     def forward(self, x: torch.Tensor):
         fine_details = []
 
+        original_shapes = []
+
         for dl, pool in zip(self.layers_down, self.pool_layers):
             x = dl(x)
             fine_details.append(x)
+
+            # note: this following part assumes that the pool size is 2.
+            pad = (0, x.shape[3] % 2, 0, x.shape[2] % 2)
+            original_shapes.append(x.shape)
+            # batch channel x y
+            if pad != (0,0,0,0):
+                x = torch.nn.functional.pad(x, pad, "replicate")
+            
             x = pool(x)
         
         x = self.pred_layer(x)
 
         for ul, upsampler in zip(self.layers_up, self.upsamplers):
-        
+            
+
             x = upsampler(x)
+            target_shape = original_shapes.pop()
+            if pad != x.shape:
+                # this implementation assumes padding happened only on the 
+                # "right" (big index) side
+                x = x[:,:,:target_shape[2], :target_shape[3]]
+
             fine = fine_details.pop()
             x = torch.concat([x, fine], dim = 1)
             x = ul(x)

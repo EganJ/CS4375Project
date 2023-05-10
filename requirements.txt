@@ -1,3 +1,5 @@
 torch
 kaggle
 tqdm
+seaborn
+seaborn-image
