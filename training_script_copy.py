@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 import fcnn, unet
 import datetime
 import argparse
-from data.loaders import SteelLoader, AitexDataset, SegmentationMnistDataset
+from data.loaders_copy import SteelLoader, AitexDataset, SegmentationMnistDataset
 from loss import DiceLoss
 
 def print_flush(*args, **kwargs):

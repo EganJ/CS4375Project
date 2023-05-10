@@ -8,7 +8,6 @@ nohup.out
 !training_results/steel-simplefcn-lr-0.001/epoch28state.torch
 !training_results/steel-simplefcn-lr-0.001/epoch10state.torch
 !training_results/mnist-simplefcn-lr-0.001/epoch50state.torch
-!training_results/mnist-unet_paper-lr-0.001/epoch50state.torch
 !training_results/mnist-unet_v2-lr-0.001/epoch50state.torch
 !training_results/mnist-unet_v2-lr-0.01/epoch50state.torch
 !training_results/mnist-unet_v2-lr-0.0001/epoch50state.torch
