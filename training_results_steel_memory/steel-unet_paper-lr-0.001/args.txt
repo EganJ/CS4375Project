@@ -1,0 +1,1 @@
+Namespace(data='steel', device='cuda:0', lr='1e-3', lr_decay=0.94, model='unet_paper', n_epochs='30', res_parent_dir='training_results_steel_memory')

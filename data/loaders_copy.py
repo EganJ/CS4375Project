@@ -5,6 +5,7 @@ import threading
 from torch.utils.data import Dataset, DataLoader
 import os
 from os import path
+from tqdm import tqdm
 
 steel_root = path.join(path.dirname(__file__), "steel_defect")
 steel_img_dir = path.join(steel_root, "processed", "images")
@@ -90,7 +91,7 @@ class SteelDataset(Dataset):
     """
     def __init__(self, train = True):
         if train:
-            self.catalog = steel_train_catalog.copy()
+            self.catalog = steel_train_catalog.copy()[:2000]
         else:
             self.catalog = steel_test_catalog.copy()
         
@@ -126,6 +127,9 @@ class SteelDataset(Dataset):
 
         n = min(self.chunksize, len(self.catalog) - start_ind)
 
+        # horribly janky to set this on self.
+        self.tqdm_progress = tqdm(total = n)
+
         breaks = [start_ind + (n * j) // self.threads
                   for j in range(self.threads + 1)]
 
@@ -143,6 +147,7 @@ class SteelDataset(Dataset):
             name = self.catalog[i]
             self.loaded[i] = [torch.Tensor(np.load(path.join(steel_img_dir, name))),
                               torch.Tensor(np.load(path.join(steel_label_dir, name)))]
+            self.tqdm_progress.update(1)
 
     
 class SteelLoader(DataLoader):
