@@ -89,7 +89,7 @@ if __name__ == "__main__":
     print_flush(repr(parsed))
     
     # Set up training prereqs
-    optim = torch.optim.Adam(network.parameters(), lr)
+    optim = torch.optim.SGD(network.parameters(), lr, momentum = 0.9)
     lr_schedule = torch.optim.lr_scheduler.ExponentialLR(optim, lr_decay)
 
     loss_fn = DiceLoss()

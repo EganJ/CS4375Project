@@ -111,6 +111,8 @@ if not path.exists(steel_processed_dir):
                 # For some reason the transpose here takes the overall runtime of this
                 # part of the script from ~20 minutes to ~80 minutes. 
                 img_tensor = np.asarray(Image.open(img_origin_file)).transpose(2, 0, 1)
+                assert np.max(img_tensor) > 1 # make sure all images are in fact 0-255
+                img_tensor = img_tensor / 255 # image channels are 0-255
                 np.save(image_fpath, img_tensor)
 
             label_fpath = path.join(processed_label_dir, f"{img_id}.npy")

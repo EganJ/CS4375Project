@@ -1,6 +1,8 @@
 data/steel_defect/
 data/aitex/processed/
 nohup.out
+# cached file are toooooo large.
+*.torch
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode

@@ -18,7 +18,9 @@ class DiceLoss(torch.nn.Module):
         intersection = intersection.sum(-1).sum(-1)
 
         domain = pred ** 2 + target ** 2
-        domain = domain.sum(-1).sum(-1)
+        # Was running into nan issues, and added 1e-8 to prevent a division near
+        # zero.  
+        domain = domain.sum(-1).sum(-1) + 1e-8
 
         # Score for each class. Should work well for 
         dice_score = 2 * intersection / domain
