@@ -50,8 +50,8 @@ class SimpleFCN(BaseFCN):
 
         # Downsample to smaller dimensions. We need to keep track of the outputs
         # so they can be fused with upsampling later.
-        pool1_dim = 15
-        pool2_dim = 15
+        pool1_dim = 32
+        pool2_dim = 32
 
         pool1_stride = 2
         pool2_stride = 2
@@ -71,8 +71,10 @@ class SimpleFCN(BaseFCN):
 
         # makes predictions on a coarse level. These would be the linear layers
         # in a simple classification network.
-        prediction_layer = nn.Conv2d(pool2_dim, pool2_dim, kernel_size=(7, 7),
-                                          stride=(1, 1), padding=(3,3))
+        prediction_layer = nn.Sequential(
+            nn.Conv2d(pool2_dim, pool2_dim, kernel_size=(7, 7),
+                      stride=(1, 1), padding=(3,3)),
+            nn.ReLU())
         
         upsample_layers = nn.ModuleList([
             nn.Sequential(

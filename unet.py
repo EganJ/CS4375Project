@@ -120,6 +120,8 @@ class SimpleUNet(BaseUNet):
 def simple_unet_v1(d_in, d_out):
     return SimpleUNet([d_in, 32,32,64], 128, [64, 32, 32, d_out])
 
+def simple_unet_v2(d_in, d_out):
+    return SimpleUNet([d_in, 32, 32, 64], 128, [64, 32, 32, d_out])
 
 def simple_unet_paper_version(d_in, d_out):
     return SimpleUNet([d_in, 64,128,256, 512], 1024, [512, 256, 128, 64, d_out])
